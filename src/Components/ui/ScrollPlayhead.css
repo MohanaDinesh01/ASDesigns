@@ -1,0 +1,54 @@
+.playhead {
+  position: fixed;
+  left: var(--space-sm);
+  top: 0;
+  height: 100vh;
+  width: 1px;
+  z-index: 200;
+  pointer-events: none;
+  display: none;
+}
+
+@media (min-width: 900px) {
+  .playhead {
+    display: block;
+  }
+}
+
+.playhead__track {
+  position: relative;
+  height: 60vh;
+  width: 1px;
+  background: var(--color-border);
+  margin-top: 20vh;
+}
+
+.playhead__fill {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 1px;
+  background: var(--color-accent);
+  transition: height 0.05s linear;
+}
+
+.playhead__dot {
+  position: absolute;
+  left: 50%;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--color-accent);
+  transform: translate(-50%, -50%);
+  box-shadow: 0 0 8px var(--color-accent);
+}
+
+.playhead__timecode {
+  position: absolute;
+  left: 16px;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  color: var(--color-text-muted);
+  transform: translateY(-50%);
+  white-space: nowrap;
+}

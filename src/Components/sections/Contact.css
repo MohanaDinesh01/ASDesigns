@@ -1,0 +1,116 @@
+.contact {
+  padding: var(--space-lg) var(--space-lg);
+  background: var(--color-bg);
+}
+
+.contact__header {
+  max-width: 600px;
+  margin-bottom: var(--space-lg);
+}
+
+.contact__eyebrow {
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  letter-spacing: 0.15em;
+  color: var(--color-accent);
+}
+
+.contact__title {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  text-transform: uppercase;
+  margin: var(--space-xs) 0;
+}
+
+.contact__subtext {
+  color: var(--color-text-muted);
+  font-size: 1rem;
+  line-height: 1.5;
+}
+
+.contact__form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+  max-width: 560px;
+}
+
+.contact__field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.contact__field label {
+  font-size: 0.85rem;
+  color: var(--color-text-muted);
+  font-family: var(--font-mono);
+  letter-spacing: 0.05em;
+}
+
+.contact__field input,
+.contact__field select,
+.contact__field textarea {
+  background: var(--color-bg-alt);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  padding: 0.75rem 1rem;
+  color: var(--color-text);
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  transition: border-color 0.15s ease;
+}
+
+.contact__field input:focus,
+.contact__field select:focus,
+.contact__field textarea:focus {
+  outline: none;
+  border-color: var(--color-accent);
+}
+
+.contact__field textarea {
+  resize: vertical;
+}
+
+.contact__error {
+  font-size: 0.8rem;
+  color: var(--color-accent-alt);
+}
+
+.contact__submit {
+  align-self: flex-start;
+  padding: 0.9rem 2rem;
+  background: var(--color-accent);
+  color: var(--color-bg);
+  border: none;
+  border-radius: var(--radius);
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition:
+    transform 0.15s ease,
+    opacity 0.15s ease;
+}
+
+.contact__submit:hover:not(:disabled) {
+  transform: translateY(-2px);
+}
+
+.contact__submit:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.contact__status {
+  font-size: 0.9rem;
+  margin-top: -0.5rem;
+}
+
+.contact__status--success {
+  color: var(--color-accent-alt);
+}
+
+.contact__status--error {
+  color: var(--color-accent);
+}

@@ -1,0 +1,35 @@
+:root {
+  /* Colors — matched to logo */
+  --color-bg: #0b0b0c;
+  --color-bg-alt: #161617;
+  --color-text: #f5f4f0;
+  --color-text-muted: #8c8b87;
+  --color-accent: #e9862a; /* logo orange */
+  --color-accent-alt: #21b1f0; /* logo cyan */
+  --color-border: #2a2a2b;
+
+  /* Typography */
+  --font-display: "Bebas Neue", sans-serif;
+  --font-body: "Inter", sans-serif;
+  --font-mono: "JetBrains Mono", monospace;
+
+  --space-xs: 0.5rem;
+  --space-sm: 1rem;
+  --space-md: 2rem;
+  --space-lg: 4rem;
+  --space-xl: 8rem;
+
+  --radius: 4px;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background: var(--color-bg);
+  color: var(--color-text);
+  font-family: var(--font-body);
+}
