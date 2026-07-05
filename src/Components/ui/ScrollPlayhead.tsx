@@ -12,14 +12,11 @@ export default function ScrollPlayhead() {
           className="playhead__fill"
           style={{ height: `${progress * 100}%` }}
         />
-        <div className="playhead__dot" style={{ top: `${progress * 100}%` }} />
+        <div className="playhead__marker" style={{ top: `${progress * 100}%` }}>
+          <div className="playhead__dot" />
+          <span className="playhead__timecode">{formatTimecode(progress)}</span>
+        </div>
       </div>
-      <span
-        className="playhead__timecode"
-        style={{ top: `${progress * 100}%` }}
-      >
-        {formatTimecode(progress)}
-      </span>
     </div>
   );
 }

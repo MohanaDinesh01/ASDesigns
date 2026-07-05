@@ -32,23 +32,28 @@
   transition: height 0.05s linear;
 }
 
-.playhead__dot {
+.playhead__marker {
   position: absolute;
-  left: 50%;
+  left: 0;
+  transform: translateY(-50%);
+}
+
+.playhead__dot {
   width: 8px;
   height: 8px;
   border-radius: 50%;
   background: var(--color-accent);
-  transform: translate(-50%, -50%);
+  transform: translateX(-50%);
   box-shadow: 0 0 8px var(--color-accent);
 }
 
 .playhead__timecode {
   position: absolute;
   left: 16px;
+  top: 50%;
+  transform: translateY(-50%);
   font-family: var(--font-mono);
   font-size: 0.7rem;
   color: var(--color-text-muted);
-  transform: translateY(-50%);
   white-space: nowrap;
 }

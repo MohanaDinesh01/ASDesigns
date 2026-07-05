@@ -1,6 +1,7 @@
 import { Canvas } from "@react-three/fiber";
 import { Suspense } from "react";
 import FloatingFrames from "../objects/FloatingFrames";
+// import WireframeShape from "../objects/WireframeShape";
 
 export default function HeroScene() {
   return (
@@ -12,6 +13,7 @@ export default function HeroScene() {
     >
       <Suspense fallback={null}>
         <FloatingFrames />
+        {/* <WireframeShape /> */}
       </Suspense>
     </Canvas>
   );

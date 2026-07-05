@@ -1,0 +1,21 @@
+.hero-side-art {
+  position: fixed;
+  left: 40px;
+  bottom: 120px;
+  width: 140px;
+  display: none;
+  pointer-events: none;
+  z-index: 5;
+}
+
+.hero-side-art img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+@media (min-width: 1400px) {
+  .hero-side-art {
+    display: block;
+  }
+}

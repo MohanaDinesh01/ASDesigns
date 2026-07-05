@@ -1,7 +1,7 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Navbar from "./components/layout/Navbar";
-import Footer from "./components/layout/Footer";
-import ScrollPlayhead from "./components/ui/ScrollPlayhead";
+import Navbar from "./Components/layout/Navbar";
+import Footer from "./Components/layout/Footer";
+import ScrollPlayhead from "./Components/ui/ScrollPlayhead";
 import Home from "./pages/Home";
 import Work from "./pages/Work";
 import WorkDetail from "./pages/WorkDetail";

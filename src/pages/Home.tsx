@@ -1,7 +1,7 @@
-import Hero from "../components/sections/Hero";
-import Services from "../components/sections/Services";
-import CaseStudies from "../components/sections/CaseStudies";
-import Testimonials from "../components/sections/Testimonials";
+import Hero from "../Components/sections/Hero";
+import Services from "../Components/sections/Services";
+import CaseStudies from "../Components/sections/CaseStudies";
+import Testimonials from "../Components/sections/Testimonials";
 
 export default function Home() {
   return (

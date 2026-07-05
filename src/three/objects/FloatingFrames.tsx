@@ -2,62 +2,75 @@ import { useRef, useMemo } from "react";
 import { useFrame } from "@react-three/fiber";
 import * as THREE from "three";
 
-const FRAME_COUNT = 10;
-
-// Colors alternate between the two brand accents for the glow effect
-const COLORS = ["#E9862A", "#21B1F0"];
+const PARTICLE_COUNT = 120;
 
 export default function FloatingFrames() {
-  const groupRef = useRef<THREE.Group>(null);
+  const pointsRef = useRef<THREE.Points>(null);
 
-  const frames = useMemo(() => {
-    return Array.from({ length: FRAME_COUNT }, (_, i) => {
-      // Keep frames OFF the center where the headline text sits.
-      // Randomly pick left side (-4 to -2) or right side (2 to 4).
+  const { positions, colors } = useMemo(() => {
+    const positions = new Float32Array(PARTICLE_COUNT * 3);
+    const colors = new Float32Array(PARTICLE_COUNT * 3);
+
+    const orange = new THREE.Color("#E9862A");
+    const cyan = new THREE.Color("#21B1F0");
+
+    for (let i = 0; i < PARTICLE_COUNT; i++) {
       const side = Math.random() > 0.5 ? 1 : -1;
-      const x = side * (2 + Math.random() * 2);
+      const x = side * (1.5 + Math.random() * 3.5);
+      const y = (Math.random() - 0.5) * 5;
+      const z = (Math.random() - 0.5) * 3;
 
-      return {
-        position: [
-          x,
-          (Math.random() - 0.5) * 3.5,
-          (Math.random() - 0.5) * 2,
-        ] as [number, number, number],
-        rotationSpeed: (Math.random() - 0.5) * 0.15,
-        floatOffset: Math.random() * Math.PI * 2,
-        scale: 0.25 + Math.random() * 0.3,
-        color: COLORS[i % 2],
-        key: i,
-      };
-    });
+      positions[i * 3] = x;
+      positions[i * 3 + 1] = y;
+      positions[i * 3 + 2] = z;
+
+      const color = Math.random() > 0.5 ? orange : cyan;
+      colors[i * 3] = color.r;
+      colors[i * 3 + 1] = color.g;
+      colors[i * 3 + 2] = color.b;
+    }
+
+    return { positions, colors };
   }, []);
 
   useFrame((state) => {
-    if (!groupRef.current) return;
+    if (!pointsRef.current) return;
     const t = state.clock.getElapsedTime();
-    groupRef.current.children.forEach((child, i) => {
-      const f = frames[i];
-      child.rotation.z += f.rotationSpeed * 0.01;
-      child.position.y += Math.sin(t * 0.5 + f.floatOffset) * 0.001;
-    });
-    groupRef.current.rotation.y = Math.sin(t * 0.05) * 0.1;
+    pointsRef.current.rotation.y = Math.sin(t * 0.05) * 0.1;
+
+    const posAttr = pointsRef.current.geometry.attributes.position;
+    for (let i = 0; i < PARTICLE_COUNT; i++) {
+      const y = posAttr.getY(i);
+      posAttr.setY(i, y + Math.sin(t * 0.3 + i) * 0.0015);
+    }
+    posAttr.needsUpdate = true;
   });
 
   return (
-    <group ref={groupRef}>
-      {frames.map((f) => (
-        <mesh key={f.key} position={f.position} scale={f.scale}>
-          <planeGeometry args={[1, 0.6]} />
-          <meshBasicMaterial
-            color={f.color}
-            side={THREE.DoubleSide}
-            transparent
-            opacity={0.12}
-            blending={THREE.AdditiveBlending}
-            depthWrite={false}
-          />
-        </mesh>
-      ))}
-    </group>
+    <points ref={pointsRef}>
+      <bufferGeometry>
+        <bufferAttribute
+          attach="attributes-position"
+          count={PARTICLE_COUNT}
+          array={positions}
+          itemSize={3}
+        />
+        <bufferAttribute
+          attach="attributes-color"
+          count={PARTICLE_COUNT}
+          array={colors}
+          itemSize={3}
+        />
+      </bufferGeometry>
+      <pointsMaterial
+        size={0.05}
+        vertexColors
+        transparent
+        opacity={0.7}
+        blending={THREE.AdditiveBlending}
+        depthWrite={false}
+        sizeAttenuation
+      />
+    </points>
   );
 }
