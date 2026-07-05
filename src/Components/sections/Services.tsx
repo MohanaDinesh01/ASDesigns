@@ -36,6 +36,24 @@ const services: Service[] = [
       "Ongoing design and edit support so your feed stays consistent and on-brand.",
     tags: ["Content calendars", "Templates", "Batch editing"],
   },
+  {
+    time: "00:00:05:00",
+    title: "Website & UI Design",
+    description:
+      "High-converting layouts, wireframes, and digital interfaces built to turn casual visitors into loyal customers.",
+    tags: ["UI/UX wireframes", "Landing pages", "Figma design"],
+  },
+  {
+    time: "00:00:06:00",
+    title: "Advertising Creative",
+    description:
+      "High-performance visual hooks and dynamic ad variants engineered to maximize clicks and stop the scroll.",
+    tags: [
+      "Meta & TikTok ads",
+      "Static banner suites",
+      "Direct-response hooks",
+    ],
+  },
 ];
 
 export default function Services() {

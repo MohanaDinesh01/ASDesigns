@@ -13,36 +13,42 @@ export interface CaseStudy {
 
 export const caseStudies: CaseStudy[] = [
   {
-    id: "nova-studio-refresh",
-    client: "Nova Studio",
-    title: "A sharper identity for a fast-moving creative team",
-    category: "Brand identity",
-    thumbnail: logoThumbnail,
-    outcome: "40% increase in engagement",
-    tags: ["Logo system", "Brand kit", "Launch assets"],
-    description:
-      "Nova Studio needed a visual identity that matched the pace of their work. We rebuilt their logo system, color palette, and social templates so every touchpoint felt consistent.",
+    id: "vanguard-branding",
+    thumbnail:
+      "https://images.unsplash.com/photo-1626785774573-4b799315345d?auto=format&fit=crop&w=800&q=80",
+    client: "Vanguard Coffee Co.",
+    title:
+      "Crafting a nostalgic yet modern visual identity for a premium roastery",
+    category: "Logo Design / Brand Identity",
+    outcome:
+      "Created a comprehensive brand book, custom typography, and primary logos that helped secure prime retail placement in 45 regional supermarkets.",
+    tags: ["Logo Design", "Typography", "Vector Illustration", "Packaging"],
   },
   {
-    id: "pulse-fitness-campaign",
-    client: "Pulse Fitness",
-    title: "Social edits built to hold attention past the first second",
-    category: "Video editing",
-    thumbnail: logoThumbnail,
-    outcome: "2.4x more video saves",
-    tags: ["Reels", "Color grade", "Captions"],
-    description:
-      "Pulse Fitness came to us with raw gym footage and a scroll-past problem. We restructured pacing, added dynamic captions, and graded every clip for a consistent, punchy feed.",
+    id: "velocity-marketing",
+    thumbnail:
+      "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=800&q=80",
+    client: "Velocity Apparel",
+    title: "High-impact visual assets for an international streetwear launch",
+    category: "Graphic Design / Digital Media",
+    outcome:
+      "Designed over 50 social media assets, lookbooks, and web banners, contributing to a sold-out debut collection within 48 hours of launch.",
+    tags: [
+      "Graphic Design",
+      "Art Direction",
+      "Photoshop",
+      "Social Media Graphics",
+    ],
   },
   {
-    id: "orbit-product-launch",
-    client: "Orbit Labs",
-    title: "Motion-led launch visuals for a new product story",
-    category: "Motion graphics",
-    thumbnail: logoThumbnail,
-    outcome: "65% lift in click-through",
-    tags: ["Launch film", "Title design", "Social cutdowns"],
-    description:
-      "Orbit Labs needed their product launch to feel as sharp as the product itself. We built a full motion package: launch film, animated titles, and cutdowns for every platform.",
+    id: "pulse-commercial",
+    thumbnail:
+      "https://images.unsplash.com/photo-1574717024653-61fd2cf4d44d?auto=format&fit=crop&w=800&q=80",
+    client: "Pulse Energy Drinks",
+    title: "Editing a fast-paced, rhythmic ad campaign for Gen-Z audiences",
+    category: "Video Editing / Motion Graphics",
+    outcome:
+      "Cut a 30-second commercial sequence and multi-format vertical clips that generated over 2.4 million views across TikTok and Instagram Reels.",
+    tags: ["Video Editing", "Color Grading", "Sound Design", "Premiere Pro"],
   },
 ];
