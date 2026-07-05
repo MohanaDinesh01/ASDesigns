@@ -2,6 +2,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Navbar from "./Components/layout/Navbar";
 import Footer from "./Components/layout/Footer";
 import ScrollPlayhead from "./Components/ui/ScrollPlayhead";
+import SideLabel from "./Components/ui/SideLabel";
 import Home from "./pages/Home";
 import Work from "./pages/Work";
 import WorkDetail from "./pages/WorkDetail";
@@ -12,6 +13,7 @@ function App() {
   return (
     <BrowserRouter>
       <ScrollPlayhead />
+      <SideLabel />
       <Navbar />
       <Routes>
         <Route path="/" element={<Home />} />

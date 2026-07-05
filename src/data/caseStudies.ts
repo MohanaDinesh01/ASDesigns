@@ -1,5 +1,3 @@
-import logoThumbnail from "../assets/logo.png";
-
 export interface CaseStudy {
   id: string;
   client: string;
