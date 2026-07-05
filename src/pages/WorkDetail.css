@@ -18,16 +18,19 @@
 }
 
 .work-detail__category {
+  display: block;
   font-family: var(--font-mono);
   font-size: 0.8rem;
   color: var(--color-accent);
+  margin-top: var(--space-xs);
 }
 
 .work-detail__title {
   font-family: var(--font-display);
   font-size: clamp(2rem, 5vw, 3.5rem);
+  line-height: 1.05;
   text-transform: uppercase;
-  margin: var(--space-xs) 0;
+  margin: var(--space-sm) 0;
 }
 
 .work-detail__client {
