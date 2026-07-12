@@ -25,7 +25,7 @@ function App() {
     // enables client-side routing (URL changes without full page reload)
     <BrowserRouter>
       {/* shown on every page: scroll indicator */}
-      {/* <ScrollPlayhead /> */}
+      <ScrollPlayhead />
 
       {/* shown on every page: side label */}
       <SideLabel />
