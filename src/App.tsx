@@ -19,6 +19,7 @@ import Work from "./pages/Work";
 import WorkDetail from "./pages/WorkDetail";
 import About from "./pages/About";
 import Contact from "./pages/Contact";
+import PrintPrep from "./pages/PrintPrep";
 
 function App() {
   return (
@@ -41,6 +42,7 @@ function App() {
         {/* single work item, :id is a dynamic URL param */}
         <Route path="/about" element={<About />} /> {/* about page */}
         <Route path="/contact" element={<Contact />} /> {/* contact page */}
+        <Route path="/tools/print-prep" element={<PrintPrep />} />
       </Routes>
 
       {/* shown on every page: footer */}
