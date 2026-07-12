@@ -1,4 +1,4 @@
-const API_BASE_URL = "https://asdesignsapi-xi.vercel.app/";
+const API_BASE_URL = "https://asdesignsapi-xi.vercel.app/api";
 
 export interface ContactPayload {
   name: string;
