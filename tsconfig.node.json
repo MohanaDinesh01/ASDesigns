@@ -1,23 +1,65 @@
 {
   "compilerOptions": {
+    // Stores TypeScript incremental build information (cache)
+    // Helps speed up future type-checking runs
     "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.node.tsbuildinfo",
+
+    // JavaScript version to target
+    // Enables modern ES2023 syntax/features
     "target": "es2023",
+
+    // Type definitions available during development
+    // Includes ES2023 APIs such as Array methods, Promise APIs, etc.
     "lib": ["ES2023"],
+
+    // Load Node.js type definitions
+    // Gives IntelliSense and type support for process, fs, path, etc.
     "types": ["node"],
+
+    // Skip type-checking declaration files in node_modules
+    // Improves build/type-checking performance
     "skipLibCheck": true,
 
     /* Bundler mode */
+
+    // Use Node.js modern module resolution behavior
+    // Supports ES Modules and CommonJS compatibility
     "module": "nodenext",
+
+    // Allows imports like:
+    // import data from "./config.ts"
     "allowImportingTsExtensions": true,
+
+    // Keeps import/export statements exactly as written
+    // Useful when Vite or another bundler handles modules
     "verbatimModuleSyntax": true,
+
+    // Forces TypeScript to treat files as modules
+    // Prevents accidental global-scope behavior
     "moduleDetection": "force",
+
+    // TypeScript performs type-checking only
+    // No JavaScript files are generated
     "noEmit": true,
 
-    /* Linting */
+    /* Linting / Code Quality Rules */
+
+    // Reports an error if a local variable is declared but never used
     "noUnusedLocals": true,
+
+    // Reports an error if a function parameter is never used
     "noUnusedParameters": true,
+
+    // Allows only syntax that can be safely removed during transpilation
+    // Helps keep code compatible with modern tooling
     "erasableSyntaxOnly": true,
+
+    // Prevents accidental fallthrough in switch statements
+    // Forces explicit break/return behavior
     "noFallthroughCasesInSwitch": true
   },
+
+  // Only apply this TypeScript configuration
+  // to the Vite configuration file
   "include": ["vite.config.ts"]
 }

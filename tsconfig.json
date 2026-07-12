@@ -1,7 +1,11 @@
 {
   "files": [],
   "references": [
+    // Configuration for the application source code
+    // // Typically contains settings for React components, pages, etc.
     { "path": "./tsconfig.app.json" },
+    // Configuration for Node.js-related files
+    // Typically used for Vite config, scripts, tooling, etc.
     { "path": "./tsconfig.node.json" }
   ]
 }

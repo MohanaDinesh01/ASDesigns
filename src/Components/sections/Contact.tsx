@@ -3,6 +3,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { useState } from "react";
 import "./Contact.css";
+import { submitContactForm } from "../../api/contact";
 
 const contactSchema = z.object({
   name: z.string().min(2, "Enter your name"),
@@ -27,10 +28,7 @@ export default function Contact() {
 
   const onSubmit = async (data: ContactFormData) => {
     try {
-      // TODO: replace with real .NET API call once Phase 4 is built
-      // await fetch('/api/contact', { method: 'POST', body: JSON.stringify(data) });
-      console.log("Form submitted:", data);
-      await new Promise((resolve) => setTimeout(resolve, 600)); // simulate request
+      await submitContactForm(data);
       setStatus("success");
       reset();
     } catch {

@@ -1,19 +1,35 @@
 <!doctype html>
 <html lang="en">
   <head>
+    <!-- character encoding -->
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+    <!-- browser tab icon -->
+    <link rel="icon" type="image/svg+xml" href="/logo.png" />
+
+    <!-- responsive scaling on mobile -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- early connect to speed up font loading -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
+
+    <!-- same, for actual font files -->
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+    <!-- loads 3 Google Fonts: Bebas Neue, Inter, JetBrains Mono -->
     <link
       href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap"
       rel="stylesheet"
     />
+
+    <!-- browser tab title -->
     <title>as-designs-forge</title>
   </head>
   <body>
+    <!-- React mounts the entire app here -->
     <div id="root"></div>
+
+    <!-- entry point that boots up React -->
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>
