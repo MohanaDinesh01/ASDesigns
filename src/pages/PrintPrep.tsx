@@ -1,4 +1,4 @@
-import PrintPrepTool from "../components/tools/PrintPrepTool";
+import PrintPrepTool from "../Components/tools/PrintPrepTool";
 
 export default function PrintPrep() {
   return (

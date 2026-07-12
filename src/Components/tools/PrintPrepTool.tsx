@@ -61,7 +61,7 @@ export default function PrintPrepTool() {
 
       setProgressLabel("Removing background (first use may take a moment)...");
       const noBgBlob = await removeBackground(fullBlob, {
-        progress: (key, current, total) => {
+        progress: (_key, current, total) => {
           setProgressLabel(
             `Removing background... ${Math.round((current / total) * 100)}%`,
           );
