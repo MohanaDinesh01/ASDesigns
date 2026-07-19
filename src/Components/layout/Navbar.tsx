@@ -9,6 +9,11 @@ const tools = [
     path: "/tools/print-prep",
     desc: "Resize, remove background, split for A3 printing",
   },
+  {
+    name: "A3 Collage Maker",
+    path: "/tools/collage-a3",
+    desc: "Combine multiple photos into a print-ready A3 grid",
+  },
 ];
 
 export default function Navbar() {

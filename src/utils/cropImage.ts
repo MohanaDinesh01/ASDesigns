@@ -15,22 +15,52 @@ export function loadImage(src: string): Promise<HTMLImageElement> {
   });
 }
 
-// Draws the user-selected crop region onto a canvas at the exact target
-// pixel size (e.g. 5700x7800), regardless of the crop's native size.
+function getRadianAngle(degrees: number) {
+  return (degrees * Math.PI) / 180;
+}
+
+function rotatedBoundingBox(width: number, height: number, rotation: number) {
+  const rad = getRadianAngle(rotation);
+  return {
+    width: Math.abs(Math.cos(rad) * width) + Math.abs(Math.sin(rad) * height),
+    height: Math.abs(Math.sin(rad) * width) + Math.abs(Math.cos(rad) * height),
+  };
+}
+
+// Rotation-aware crop: rotates the full image first onto a bounding-box canvas,
+// then crops the requested pixel region from that rotated canvas, then resizes
+// the result to the exact target pixel dimensions.
 export async function getCroppedCanvas(
   imageSrc: string,
   cropPixels: PixelCrop,
   targetWidth: number,
   targetHeight: number,
+  rotation = 0,
 ): Promise<HTMLCanvasElement> {
   const image = await loadImage(imageSrc);
-  const canvas = document.createElement("canvas");
-  canvas.width = targetWidth;
-  canvas.height = targetHeight;
-  const ctx = canvas.getContext("2d")!;
 
-  ctx.drawImage(
-    image,
+  const { width: bboxW, height: bboxH } = rotatedBoundingBox(
+    image.width,
+    image.height,
+    rotation,
+  );
+  const rotatedCanvas = document.createElement("canvas");
+  rotatedCanvas.width = bboxW;
+  rotatedCanvas.height = bboxH;
+  const rotatedCtx = rotatedCanvas.getContext("2d")!;
+
+  rotatedCtx.translate(bboxW / 2, bboxH / 2);
+  rotatedCtx.rotate(getRadianAngle(rotation));
+  rotatedCtx.translate(-image.width / 2, -image.height / 2);
+  rotatedCtx.drawImage(image, 0, 0);
+
+  const finalCanvas = document.createElement("canvas");
+  finalCanvas.width = targetWidth;
+  finalCanvas.height = targetHeight;
+  const finalCtx = finalCanvas.getContext("2d")!;
+
+  finalCtx.drawImage(
+    rotatedCanvas,
     cropPixels.x,
     cropPixels.y,
     cropPixels.width,
@@ -41,7 +71,7 @@ export async function getCroppedCanvas(
     targetHeight,
   );
 
-  return canvas;
+  return finalCanvas;
 }
 
 export function canvasToBlob(canvas: HTMLCanvasElement): Promise<Blob> {
@@ -53,7 +83,6 @@ export function canvasToBlob(canvas: HTMLCanvasElement): Promise<Blob> {
   });
 }
 
-// Splits a full-size canvas into top and bottom halves.
 export function splitCanvasVertically(source: HTMLCanvasElement): {
   top: HTMLCanvasElement;
   bottom: HTMLCanvasElement;

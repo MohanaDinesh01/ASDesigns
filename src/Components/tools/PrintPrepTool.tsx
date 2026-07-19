@@ -8,6 +8,7 @@ import {
   splitCanvasVertically,
   type PixelCrop,
 } from "../../utils/cropImage";
+import EraserCanvas from "./EraserCanvas";
 import "./PrintPrepTool.css";
 
 // 19in x 26in at 300 DPI
@@ -15,9 +16,17 @@ const TARGET_WIDTH = 19 * 300; // 5700px
 const TARGET_HEIGHT = 26 * 300; // 7800px
 const ASPECT = TARGET_WIDTH / TARGET_HEIGHT;
 
-type Stage = "upload" | "position" | "processing" | "done" | "error";
+type Stage =
+  | "upload"
+  | "position"
+  | "processing"
+  | "touchup"
+  | "generating"
+  | "done"
+  | "error";
 
 export default function PrintPrepTool() {
+  const [rotation, setRotation] = useState(0);
   const [stage, setStage] = useState<Stage>("upload");
   const [imageSrc, setImageSrc] = useState<string | null>(null);
   const [crop, setCrop] = useState<Point>({ x: 0, y: 0 });
@@ -29,6 +38,8 @@ export default function PrintPrepTool() {
   const [topUrl, setTopUrl] = useState<string | null>(null);
   const [bottomUrl, setBottomUrl] = useState<string | null>(null);
   const [errorMsg, setErrorMsg] = useState("");
+  const [originalFullUrl, setOriginalFullUrl] = useState<string | null>(null);
+  const [noBgUrl, setNoBgUrl] = useState<string | null>(null);
 
   const onFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -56,11 +67,18 @@ export default function PrintPrepTool() {
         croppedAreaPixels,
         TARGET_WIDTH,
         TARGET_HEIGHT,
+        rotation,
       );
       const fullBlob = await canvasToBlob(fullCanvas);
+      const fullUrl = URL.createObjectURL(fullBlob);
+      setOriginalFullUrl(fullUrl);
 
-      setProgressLabel("Removing background (first use may take a moment)...");
+      setProgressLabel(
+        "Removing background (this can take 20-40 seconds for best quality)...",
+      );
       const noBgBlob = await removeBackground(fullBlob, {
+        model: "isnet",
+        output: { format: "image/png", quality: 1 },
         progress: (_key, current, total) => {
           setProgressLabel(
             `Removing background... ${Math.round((current / total) * 100)}%`,
@@ -68,27 +86,8 @@ export default function PrintPrepTool() {
         },
       });
 
-      setProgressLabel("Preparing print files...");
-      const noBgUrl = URL.createObjectURL(noBgBlob);
-      const noBgImage = await new Promise<HTMLCanvasElement>((resolve) => {
-        const img = new Image();
-        img.onload = () => {
-          const canvas = document.createElement("canvas");
-          canvas.width = TARGET_WIDTH;
-          canvas.height = TARGET_HEIGHT;
-          canvas.getContext("2d")!.drawImage(img, 0, 0);
-          resolve(canvas);
-        };
-        img.src = noBgUrl;
-      });
-
-      const { top, bottom } = splitCanvasVertically(noBgImage);
-      const topBlob = await canvasToBlob(top);
-      const bottomBlob = await canvasToBlob(bottom);
-
-      setTopUrl(URL.createObjectURL(topBlob));
-      setBottomUrl(URL.createObjectURL(bottomBlob));
-      setStage("done");
+      setNoBgUrl(URL.createObjectURL(noBgBlob));
+      setStage("touchup");
     } catch (err) {
       console.error(err);
       setErrorMsg(
@@ -96,6 +95,28 @@ export default function PrintPrepTool() {
       );
       setStage("error");
     }
+  };
+
+  const handleTouchupDone = async (finalCanvas: HTMLCanvasElement) => {
+    setStage("generating");
+    setProgressLabel("Preparing print files...");
+
+    // Flatten the transparent image onto a white background
+    const flattenedCanvas = document.createElement("canvas");
+    flattenedCanvas.width = finalCanvas.width;
+    flattenedCanvas.height = finalCanvas.height;
+    const flattenedCtx = flattenedCanvas.getContext("2d")!;
+    flattenedCtx.fillStyle = "#FFFFFF";
+    flattenedCtx.fillRect(0, 0, flattenedCanvas.width, flattenedCanvas.height);
+    flattenedCtx.drawImage(finalCanvas, 0, 0);
+
+    const { top, bottom } = splitCanvasVertically(flattenedCanvas);
+    const topBlob = await canvasToBlob(top);
+    const bottomBlob = await canvasToBlob(bottom);
+
+    setTopUrl(URL.createObjectURL(topBlob));
+    setBottomUrl(URL.createObjectURL(bottomBlob));
+    setStage("done");
   };
 
   const reset = () => {
@@ -133,9 +154,14 @@ export default function PrintPrepTool() {
               image={imageSrc}
               crop={crop}
               zoom={zoom}
+              rotation={rotation}
               aspect={ASPECT}
+              minZoom={0.4}
+              maxZoom={3}
+              restrictPosition={false}
               onCropChange={setCrop}
               onZoomChange={setZoom}
+              onRotationChange={setRotation}
               onCropComplete={onCropComplete}
             />
           </div>
@@ -149,6 +175,17 @@ export default function PrintPrepTool() {
                 step={0.01}
                 value={zoom}
                 onChange={(e) => setZoom(Number(e.target.value))}
+              />
+            </label>
+            <label>
+              Rotate
+              <input
+                type="range"
+                min={-180}
+                max={180}
+                step={1}
+                value={rotation}
+                onChange={(e) => setRotation(Number(e.target.value))}
               />
             </label>
             <div className="print-prep__actions">
@@ -211,6 +248,16 @@ export default function PrintPrepTool() {
             Process another image
           </button>
         </div>
+      )}
+
+      {stage === "touchup" && originalFullUrl && noBgUrl && (
+        <EraserCanvas
+          originalImageUrl={originalFullUrl}
+          noBgImageUrl={noBgUrl}
+          width={TARGET_WIDTH}
+          height={TARGET_HEIGHT}
+          onDone={handleTouchupDone}
+        />
       )}
     </div>
   );
